@@ -1,0 +1,15 @@
+body {
+	margin: 30px;
+}
+
+#btn-area {
+	border: 2px solid black;
+}
+
+	.btn-info {
+		margin: 10px 10px 0 0;
+	}
+
+#image-area {
+	border: 2px solid black;
+}
