@@ -1,10 +1,23 @@
 var tags = ["cats", "dogs", "funny"];
+var searchTerm = '';
+var quantity = 1;
+var rating = "g";
+var apiKey = "dc6zaTOxFJmzC";
+
+var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
+	searchTerm + 
+	"&limit=" +
+	quantity +
+	"&rating=" +
+	rating + 
+	"&api_key=" +
+	apiKey;
+
+renderButtons();
 
 
 function renderButtons(){
-
 	$("#btn-area").empty();
-
 	for (var i=0; i<tags.length; i++) {
 		var btn = $("<button>");
 		btn.addClass("btn btn-info gif");
@@ -14,47 +27,82 @@ function renderButtons(){
 	}
 }
 
-renderButtons();
 
+$("#get-btn").on('click', function(event){
+	event.preventDefault();
+	var searchTerm = $("#inputAddress").val().trim();
+	tags.push(searchTerm);
+	renderButtons();
+})
 
-
-
-
-
-
-
-
-
+/*
+	$.ajax({
+		url: queryURL,
+		method: "GET"
+	}).done(function(response) {
+		$("#image-area").
+	});
+*/
 
 
 /*
-$("#get-giphy").on("click", function() {
+ // Initial array of movies
+      var movies = ["The Matrix", "The Notebook", "Mr. Nobody", "The Lion King"];
 
-      // API URL
-      var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cats";
+	   function displayMovieInfo() {
+		   var movie = $(this).attr("data-name");
+		   var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=40e9cece";
 
-      // AJAX call using url above
-      $.ajax({
-        url: queryURL,
-        method: "GET"
-      })
+        $.ajax({
+          url: queryURL,
+          method: "GET"
+        }).done(function(response) {
 
-      // once the call is done, call the function below, passing in the response
-      .done(function(response) {
+          var movieDiv = $("<div class='movie'>");
+          var rating = response.Rated;
 
-        // set image URL to a variable
-        var imageUrl = response.data.image_original_url;
+          var pOne = $("<p>").text("Rating: " + rating);
+          movieDiv.append(pOne);
 
-        // set the image to a variable
-        var giphyImage = $("<img>");
+          var released = response.Released;
 
-        // give the img tag (through catImage) the attributes of the URL source of cat image.
-        giphyImage.attr("src", imageUrl);
-        // set the alternate text of the image to cat image.
-        giphyImage.attr("alt", "cat image");
+          var pTwo = $("<p>").text("Released: " + released);
+          movieDiv.append(pTwo);
 
-        // push this new image tag to #images at the beginning
-        $("#gif-area").prepend(giphyImage);
+          var plot = response.Plot;
+
+          var pThree = $("<p>").text("Plot: " + plot);
+          movieDiv.append(pThree);
+
+          var imgURL = response.Poster;
+
+          var image = $("<img>").attr("src", imgURL);
+          movieDiv.append(image);
+          $("#movies-view").prepend(movieDiv);
+        });
+
+      }
+
+      function renderButtons() {
+        $("#buttons-view").empty();
+        for (var i = 0; i < movies.length; i++) {
+          var a = $("<button>");
+          a.addClass("movie");
+          a.attr("data-name", movies[i]);
+          a.text(movies[i]);
+          $("#buttons-view").append(a);
+        }
+      }
+
+      $("#add-movie").on("click", function(event) {
+        event.preventDefault();
+        var movie = $("#movie-input").val().trim();
+        movies.push(movie);
+        renderButtons();
       });
-    });
+
+      $(document).on("click", ".movie", displayMovieInfo);
+      renderButtons();
+
 */
+
