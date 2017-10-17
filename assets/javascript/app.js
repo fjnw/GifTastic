@@ -27,25 +27,27 @@ $(document).on("click", ".gif-btn", function(){
 	var gif = $(this).attr("data-name");
 	console.log("button click: " + gif);
 
-	var queryUrl = "http://api.giphy.com/v1/gifs/search?q=" + gif +"&limit=1&api_key=dc6zaTOxFJmzC"
+	var queryUrl = "http://api.giphy.com/v1/gifs/search?q=" + gif +"&limit=10&api_key=dc6zaTOxFJmzC"
 
 	$.ajax({
        url: queryUrl,
        method: "GET"
    }).done(function(response) {
-   	var gifDiv = $('<div class="gif-results">')
-   	$('<img>').attr({
-   		"src": response.data[0].images.fixed_width_still.url,
-   		"data-still": response.data[0].images.fixed_width_still.url,
-   		"data-animate": response.data[0].images.fixed_width.url,
-   		"data-state": "still",
-   		"class": "gif",
-   		"alt": response.data[0].title
-   	}).appendTo(gifDiv);
-   	$(	'<p>TITLE: ' + response.data[0].title + 
-   		'<br>RATING: ' + response.data[0].rating.toUpperCase() + '</p>'
-   	).appendTo(gifDiv);
-   	$("#image-area").append(gifDiv);
+   	for (i = 0; i < response.pagination.count; i++) {
+	   	var gifDiv = $('<div class="gif-results">');
+	   	$('<img>').attr({ // http://api.jquery.com/jQuery/#jQuery2   --"Creating New Elements"
+	   		"src": response.data[i].images.fixed_width_still.url ,
+	   		"data-still": response.data[i].images.fixed_width_still.url ,
+	   		"data-animate": response.data[i].images.fixed_width.url ,
+	   		"data-state": "still",
+	   		"class": "gif",
+	   		"alt": response.data[i].title
+	   	}).appendTo(gifDiv);
+	   	$(	'<p>TITLE: ' + response.data[i].title + 
+	   		'<br>RATING: ' + response.data[i].rating.toUpperCase() + '</p>'
+	   	).appendTo(gifDiv);
+	   	$("#image-area").append(gifDiv);
+   	}
    });
 });
 
