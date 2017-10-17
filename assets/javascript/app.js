@@ -1,4 +1,4 @@
-var tags = ["CATS", "DOGS", "FUNNY"];
+var tags = ["CATS", "DOGS", "TRIP"];
 
 function renderButtons(){
 	$("#btn-area").empty();
@@ -9,8 +9,12 @@ function renderButtons(){
 		btn.text(tags[i]);
 		$("#btn-area").append(btn);
 	}
-}
+};
+
 renderButtons();
+
+
+//==============================//
 
 $("#get-btn").on('click', function(event){
 	if ( $('#search-term').val().trim() === '') {
@@ -20,13 +24,22 @@ $("#get-btn").on('click', function(event){
 		var searchTerm = $("#search-term").val().trim().toUpperCase();
 		tags.push(searchTerm);
 		renderButtons();
+		$('#search-term').val('');
 	}
 })
 
-$(document).on("click", ".gif-btn", function(){
-	var gif = $(this).attr("data-name");
-	console.log("button click: " + gif);
 
+$("#reset-btn").on('click', function(event){
+	renderButtons();
+	$("#image-area").empty();
+})
+
+
+//==============================//
+
+$(document).on("click", ".gif-btn", function(){
+	$("#image-area").empty();
+	var gif = $(this).attr("data-name");
 	var queryUrl = "http://api.giphy.com/v1/gifs/search?q=" + gif +"&limit=10&api_key=dc6zaTOxFJmzC"
 
 	$.ajax({
@@ -49,7 +62,22 @@ $(document).on("click", ".gif-btn", function(){
 	   	$("#image-area").append(gifDiv);
    	}
    });
+
 });
+
+$(document).on("click", ".gif", function(){
+	var state = $(this).attr("data-state");
+	if (state === "still") {
+		 $(this).attr("src", $(this).attr("data-animate"));
+		 //console.log($(this).attr("data-animate"))
+		 $(this).attr("data-state", "animate");
+	} else {
+		 $(this).attr("src", $(this).attr("data-still"));
+		 //console.log($(this).attr("data-still"))
+		 $(this).attr("data-state", "still");
+	}
+});
+
 
 
 
@@ -65,77 +93,3 @@ $(document).on("click", ".gif-btn", function(){
 	// 	rating + 
 	// 	"&api_key=" +
 	// 	apiKey;
-
-
-
-/*
-	$.ajax({
-		url: queryURL,
-		method: "GET"
-	}).done(function(response) {
-		$("#image-area").
-	});
-*/
-
-
-/*
- // Initial array of movies
-      var movies = ["The Matrix", "The Notebook", "Mr. Nobody", "The Lion King"];
-
-	   function displayMovieInfo() {
-		   var movie = $(this).attr("data-name");
-		   var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=40e9cece";
-
-        $.ajax({
-          url: queryURL,
-          method: "GET"
-        }).done(function(response) {
-
-          var movieDiv = $("<div class='movie'>");
-          var rating = response.Rated;
-
-          var pOne = $("<p>").text("Rating: " + rating);
-          movieDiv.append(pOne);
-
-          var released = response.Released;
-
-          var pTwo = $("<p>").text("Released: " + released);
-          movieDiv.append(pTwo);
-
-          var plot = response.Plot;
-
-          var pThree = $("<p>").text("Plot: " + plot);
-          movieDiv.append(pThree);
-
-          var imgURL = response.Poster;
-
-          var image = $("<img>").attr("src", imgURL);
-          movieDiv.append(image);
-          $("#movies-view").prepend(movieDiv);
-        });
-
-      }
-
-      function renderButtons() {
-        $("#buttons-view").empty();
-        for (var i = 0; i < movies.length; i++) {
-          var a = $("<button>");
-          a.addClass("movie");
-          a.attr("data-name", movies[i]);
-          a.text(movies[i]);
-          $("#buttons-view").append(a);
-        }
-      }
-
-      $("#add-movie").on("click", function(event) {
-        event.preventDefault();
-        var movie = $("#movie-input").val().trim();
-        movies.push(movie);
-        renderButtons();
-      });
-
-      $(document).on("click", ".movie", displayMovieInfo);
-      renderButtons();
-
-*/
-
