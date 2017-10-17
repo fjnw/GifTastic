@@ -1,39 +1,70 @@
-var tags = ["cats", "dogs", "funny"];
-var searchTerm = '';
-var quantity = 1;
-var rating = "g";
-var apiKey = "dc6zaTOxFJmzC";
-
-var queryURL = "http://api.giphy.com/v1/gifs/search?q=" +
-	searchTerm + 
-	"&limit=" +
-	quantity +
-	"&rating=" +
-	rating + 
-	"&api_key=" +
-	apiKey;
-
-renderButtons();
-
+var tags = ["CATS", "DOGS", "FUNNY"];
 
 function renderButtons(){
 	$("#btn-area").empty();
 	for (var i=0; i<tags.length; i++) {
 		var btn = $("<button>");
-		btn.addClass("btn btn-info gif");
+		btn.addClass("btn btn-info gif-btn");
 		btn.attr("data-name", tags[i]);
 		btn.text(tags[i]);
 		$("#btn-area").append(btn);
 	}
 }
-
+renderButtons();
 
 $("#get-btn").on('click', function(event){
-	event.preventDefault();
-	var searchTerm = $("#inputAddress").val().trim();
-	tags.push(searchTerm);
-	renderButtons();
+	if ( $('#search-term').val().trim() === '') {
+		alert('Cannot submit with an empty field.')
+	} else {
+		event.preventDefault();
+		var searchTerm = $("#search-term").val().trim().toUpperCase();
+		tags.push(searchTerm);
+		renderButtons();
+	}
 })
+
+$(document).on("click", ".gif-btn", function(){
+	var gif = $(this).attr("data-name");
+	console.log("button click: " + gif);
+
+	var queryUrl = "http://api.giphy.com/v1/gifs/search?q=" + gif +"&limit=1&api_key=dc6zaTOxFJmzC"
+
+	$.ajax({
+       url: queryUrl,
+       method: "GET"
+   }).done(function(response) {
+   	var gifDiv = $('<div class="gif-results">')
+   	$('<img>').attr({
+   		"src": response.data[0].images.fixed_width_still.url,
+   		"data-still": response.data[0].images.fixed_width_still.url,
+   		"data-animate": response.data[0].images.fixed_width.url,
+   		"data-state": "still",
+   		"class": "gif",
+   		"alt": response.data[0].title
+   	}).appendTo(gifDiv);
+   	$(	'<p>TITLE: ' + response.data[0].title + 
+   		'<br>RATING: ' + response.data[0].rating.toUpperCase() + '</p>'
+   	).appendTo(gifDiv);
+   	$("#image-area").append(gifDiv);
+   });
+});
+
+
+
+	// var searchTerm = '';
+	// var quantity = 1;
+	// var rating = "g";
+	// var apiKey = "dc6zaTOxFJmzC";
+	// var queryUrl = "http://api.giphy.com/v1/gifs/search?q=" +
+	// 	searchTerm + 
+	// 	"&limit=" +
+	// 	quantity +
+	// 	"&rating=" +
+	// 	rating + 
+	// 	"&api_key=" +
+	// 	apiKey;
+
+
 
 /*
 	$.ajax({

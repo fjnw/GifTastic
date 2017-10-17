@@ -13,3 +13,7 @@ body {
 #image-area {
 	border: 2px solid black;
 }
+	.gif-results {
+		display: inline-block;
+		margin: 20px;
+	}
