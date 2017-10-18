@@ -13,30 +13,33 @@
 	<title>Giphy Homework</title>
 </head>
 <body>
-
-
-<div class="row">
-  <div class="col-4">
-		<form>
-		  <div class="form-group">
-		    <label for="inputAddress" class="col-form-label">Add an animal</label>
-		    <input type="text" class="form-control" id="search-term" placeholder="Type your animal here...">
-		 	 <!--<label for="inputAddress" class="col-form-label">How many GIFs do you want?</label>
-		    <input type="text" class="form-control" id="search-quantity" placeholder="Number between 1-25">
-		    <label for="inputAddress" class="col-form-label">Highest GIF rating</label>
-		    <input type="text" class="form-control" id="search-rating" placeholder="G or PG">-->
-		  </div>
-		  <button type="submit" class="btn btn-primary" id="get-btn">Get Giphy</button>
-		  <button type="submit" class="btn btn-danger" id="reset-btn">Reset</button>
-		</form>
-		</div>
 	
-	<div class="col-8" id="btn-area"></div>
-</div>
 
+<div class="container">
 
-<div class="row">
- 	<div class="col-12" id="image-area"></div>
+	<div class="row">
+		<div class="form-group col-md-4 col-sm-12">
+			<form>
+				<nav class="navbar navbar-light bg-light">
+					<label class="col-form-label">Add a GIF search button</label>
+					<input type="text" class="form-control" id="search-term" placeholder="Enter GIF search term">
+					<button type="submit" class="btn btn-success" id="get-btn">Get Giphy</button>
+					<button type="submit" class="btn btn-danger" id="reset-btn">Reset</button>
+				</nav>
+			</form>
+		</div>
+
+		<div class="col-md-8 col-sm-12">
+			<ul class="nav nav-pills" id="btn-area"></ul>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 col-sm-12" id="results-area" data-spy="scroll" data-target="#navbar-example2" data-offset="0">
+			<div class="card-columns" id="image-area"></div>
+		</div>
+	</div>
+
 </div>
 
 
@@ -48,8 +51,9 @@
 <!-- AJAX -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<!-- Javascript -->
+<!-- Javascript file -->
 <script type="text/javascript" src="assets/javascript/app.js"></script>
+
 
 </body>
 </html>

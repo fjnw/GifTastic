@@ -1,24 +1,61 @@
 body {
-	margin: 30px;
+	margin: 30px 0 0 0;
+	background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);
+	height: 1200px;
+	user-select: none;
 }
 
-form {
-	margin: 0 20px 20px 20px;
+h4, p {
+	line-height: 1em;
 }
 
-
-#btn-area {
-	border: 2px solid black;
+.container {
+	max-width: 850px;
 }
-
-	.btn-info {
-		margin: 20px 10px 0 10px;
+/* contains user interface  */
+.navbar {
+	background: rgba(0,0,0,0) !important;
+}
+	/*  form buttons */
+	#get-btn, #reset-btn {
+		margin: 20px 0 0 0;
 	}
 
-#image-area {
-	border: 2px solid black;
+	/*  container for gif searchable buttons */
+	#btn-area {
+		margin: 0 0 10px 0;
+		max-height: 120px;
+		overflow-y: scroll;
+		/*  box-shadow: 0px 0px 15px 0px rgba(0,0,0, .2) inset;  */
+	}
+		/*  gif searchable buttons */
+		.btn-outline-info {
+			margin: 10px 10px;
+		}
+
+/* scrollable area that contains image-area */
+#results-area {	
+	padding: 30px;
+	height: 600px; 
+	overflow-y: scroll;
+	box-shadow: 0px 0px 15px 5px rgba(0,0,0, .2) inset;
+
 }
-	.gif-results {
+	/* card appended here */
+	#image-area {
 		display: inline-block;
-		margin: 20px;
+		text-align: center;
+		max-width: 750px;
 	}
+		/*  card contains gif, header, and rating */
+		.card {
+			vertical-align: top;
+			display: inline-block;
+			background: rgba(46,162,181,.1);
+			margin: 10px !important;
+			width: 240px !important;
+		}
+		/*  sets image in card just under 100% so card border shows */
+		.card img {
+			width: 99.4%;
+		}
