@@ -1,4 +1,5 @@
 var tags = ["CATS", "DOGS", "TRIP"];  // initial array of searchable Gif buttons
+var limit = 10;
 
 // render buttons into #btn-area
 function renderButtons(){
@@ -7,6 +8,7 @@ function renderButtons(){
 		var btn = $("<button>");
 		btn.addClass("btn btn-info gif-btn");
 		btn.attr("data-name", tags[i]);
+		btn.attr("offset", 0);
 		btn.text(tags[i]);
 		$("#btn-area").append(btn);
 	}
@@ -50,9 +52,13 @@ $(document).on("click", ".gif-btn", function(){
 	$("#image-area").empty();
 	// set button's data-namme to variable for searching
 	var gif = $(this).attr("data-name");
+	//var offset = $(this).attr("offset");
 	// API url, with data-name as the search value, limited to 10 results, rated G, w/ public API key
 	// API documents: https://developers.giphy.com/docs/
-	var queryUrl = "http://api.giphy.com/v1/gifs/search?q=" + gif +"&limit=10&rating=g&api_key=dc6zaTOxFJmzC"
+	var queryUrl = "https://api.giphy.com/v1/gifs/search?q=" + gif + 
+		"&limit=" + limit + 
+		"&offset=" + $(this).attr("offset") + 
+		"&rating=g&api_key=dc6zaTOxFJmzC";
 
 	$.ajax({
        url: queryUrl,
@@ -79,7 +85,13 @@ $(document).on("click", ".gif-btn", function(){
 	   	$("#image-area").append(gifDiv);
    	}
    });
+  	// increases offset value in gif-btn by display limit to prevent repeat gifs for that search term
+  	$(this).attr( "offset", (parseInt($(this).attr("offset")) + limit) );
 });
+
+function incrementOffset(offsetValue){
+  	console.log($(offsetValue).attr("offset"));
+}
 
 // onclick --  gif image
 $(document).on("click", ".gif", function(){
@@ -99,7 +111,6 @@ $(document).on("click", ".gif", function(){
 		$(this).attr("data-state", "still");
 	}
 });
-
 
 
 
